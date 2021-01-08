@@ -1,0 +1,9 @@
+{
+    "data_path": "test/testdata",
+    "outdir": "test/visualizations/",
+    "n_hashtags": 50,
+    "case_sensitive": false,
+    "marker_hashtags": [ "trump", "hoax", "wuhanvirus", "chinavirus"],
+    "user_ids": ["99381285"],
+    "tweet_ids": ["3298920492"]
+}

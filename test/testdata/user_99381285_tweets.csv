@@ -1,0 +1,5 @@
+entities/hashtags,id,created_at,user/id
+"[{'text': 'hoax', 'indices': [0, 1]}, {'text': 'trump', 'indices': [0, 1]}, {'text': 'cnn', 'indices': [0, 1]}]",25,Sun Mar 22 05:52:00 +0000 2020,99381285
+"[{'text': 'hoax', 'indices': [0, 1]}, {'text': 'trump', 'indices': [0, 1]}]",26,Sun Mar 22 05:52:00 +0000 2020,99381285
+"[{'text': 'wuHaNviRus', 'indices': [0, 1]}, {'text': 'trump', 'indices': [0, 1]}, {'text': 'socialdistancing', 'indices': [0, 1]}]",27,Mon Mar 23 05:52:00 +0000 2020,99381285
+"[{'text': 'coronavirus', 'indices': [0, 1]}, {'text': 'StayAtHome', 'indices': [0, 1]}, {'text': 'socialdistancing', 'indices': [0, 1]}]",28,Mon Mar 23 05:52:00 +0000 2020,99381285

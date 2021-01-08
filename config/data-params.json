@@ -1,0 +1,14 @@
+{
+   "consumer_key": "6NFj2LUVhRjAJm5nUnCdxtT2I",
+   "consumer_secret_key": "QsTOQ0vFbhzyrqozGSNVyQPj8NqZ0Nc4qQmXAzfF2OBEecWsHg",
+   "access_token": "3300184472-SRfM96godR7PlXCzU31EB6av6zMEAKaTKdQZqZC",
+   "access_token_secret": "MARtUYcYN84ZEpyyg54ph7C3xAmKIaSzGPLLbh3Zw3iAS",
+   "bearer_token": "AAAAAAAAAAAAAAAAAAAAAJxsJwEAAAAAue7IK2t1WhRC2TM91b45XhKpBM0%3DdzdP3qUxO4FGzDTEt59iMAJdpn4TbYDWh6ZBU2uJUMbJeplQMQ",
+   "repo_path": "/teams/DSC180A_FA20_A00/b02group10/data",
+   "start_date": "",
+   "end_date": "",
+   "output_path": "/teams/DSC180A_FA20_A00/b02group10/data",
+   "frac": 0.0001,
+   "user_ids": [],
+   "tweet_ids": [ "1335276366674137090", "1313186529058136070"]
+}

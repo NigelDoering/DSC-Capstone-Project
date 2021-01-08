@@ -1,0 +1,7 @@
+{
+    "data_path": "/Users/tanujpankaj/Desktop/dsc180a/data/",
+    "outdir": "test/visualizations/",
+    "n_hashtags": 200,
+    "case_sensitive": false,
+    "hashtag": ["coronavirus", "trump"]
+}
