@@ -22,28 +22,6 @@
     * repo_path: path to directory that contains Pancea Lab GitHub repo
     * start_date, end_date: dates to collect Pancea Lab tweets from (leave both as "" to skip this part) e.g. "2020-06-20"
     * output_path: path to directory to write data to
-    * frac (float): fraction of Pancea lab tweets to collect per day
     * user_ids (list of str): Twitter User IDs to collect tweets from for the analysis portion
-    * tweet_ids (list of str): Twitter Tweet IDs to collect users who retweeted for the analysis portion
 * run 'python run.py data' in root directory of repo
 * This will only collect the data
-#### EDA
-* Set eda paramaters in config/eda-params.json.
-    * data_path: path to directory that contains data (should be same directory as data-params output path)
-    * outdir: path to directory to output visualizations and targets
-    * n_hashtags (int): this is the number of top hashtags to find
-    * case_sensitive (bool): whether or not to be case sensitive with hashtags
-    * hashtag (list of str): hashtags to make a visualization for the number of times the hashtag was used each day in the data
-* run 'python run.py eda' in root directory of repo
-* This will create an eda.html file with all the results inside your outdir directory 
-#### Analysis
-* Set analysis parameters in config/analysis-params.json.
-    * data_path: path to directory that contains data (should be same directory as data-params output path)
-    * outdir: path to directory to output visualizations and targets
-    * n_hashtags (int): number of top hashtags to use in calculating user polarity
-    * case_sensitive (bool): whether or not to be case sensitive with hashtags
-    * marker_hashtags (list of str): hashtags that we are fairly confident are associated with conspiracy (will be used to calculate polarities)
-    * user_ids (list of str): user id's to calculate polarity
-    * tweet_ids (list of str): tweet id's to use to generate histogram of user's who retweeted polarities
-* run 'python run.py analysis' in root directory of repo
-* This will create an analysis.html file with all the results inside your outdir directory 
