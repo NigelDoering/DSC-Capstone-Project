@@ -39,83 +39,83 @@ def main(targets):
         # make the data target
         logger.info("finished data target")
 
-    if 'eda' in targets or 'all' in targets:
-        logger.info("starting eda target")
-        with open('config/eda-params.json') as fh:
-            eda_cfg = json.load(fh)
-        data = pd.read_csv(os.path.join(eda_cfg["data_path"], 'data.csv'), usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
-        logger.info("shape of dataframe is {}".format(data.shape))
-        generate_stats(logger, data, **eda_cfg)
+    # if 'eda' in targets or 'all' in targets:
+    #     logger.info("starting eda target")
+    #     with open('config/eda-params.json') as fh:
+    #         eda_cfg = json.load(fh)
+    #     data = pd.read_csv(os.path.join(eda_cfg["data_path"], 'data.csv'), usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
+    #     logger.info("shape of dataframe is {}".format(data.shape))
+    #     generate_stats(logger, data, **eda_cfg)
 
-        # execute notebook / convert to html
-        convert_notebook('eda', **eda_cfg)
-        logger.info("finished eda target: wrote html file to {}".format(os.path.join(eda_cfg["outdir"], 'eda.html')))
+    #     # execute notebook / convert to html
+    #     convert_notebook('eda', **eda_cfg)
+    #     logger.info("finished eda target: wrote html file to {}".format(os.path.join(eda_cfg["outdir"], 'eda.html')))
 
-    if 'analysis' in targets or 'all' in targets:
-        logger.info("starting analysis target")
-        with open('config/analysis-params.json') as fh:
-            analysis_cfg = json.load(fh)
+    # if 'analysis' in targets or 'all' in targets:
+    #     logger.info("starting analysis target")
+    #     with open('config/analysis-params.json') as fh:
+    #         analysis_cfg = json.load(fh)
 
-        data = pd.read_csv(os.path.join(analysis_cfg["data_path"], 'data.csv'), usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
-        user_dfs = []
-        for user_id in analysis_cfg['user_ids']:
-            user_dfs.append(pd.read_csv(os.path.join(analysis_cfg["data_path"], 'user_{}_tweets.csv'.format(user_id))))
-        tweet_user_dfss = []
-        for tweet_id in analysis_cfg['tweet_ids']:
-            tweet_info = pd.read_csv(os.path.join(analysis_cfg["data_path"], 'tweet_{}.csv'.format(tweet_id)), usecols=['cat', 'data'])
-            tweet_info = tweet_info.set_index('cat')['data']
-            user_ids = tweet_info['user_ids'][1:-1].replace(" ", "").split(',')
-            logger.info(user_ids)
-            tweet_user_dfs = []
-            for user in user_ids:
-                tweet_user_dfs.append(pd.read_csv(os.path.join(analysis_cfg["data_path"], 'user_{}_tweets.csv'.format(user))))
-            tweet_user_dfss.append(tweet_user_dfs)
-        top_hashtags = pd.read_csv(os.path.join(analysis_cfg["outdir"], 'top_hashtags.csv'), index_col=0)
-        compute_stats(logger, data, top_hashtags, user_dfs, tweet_user_dfss, **analysis_cfg)
+    #     data = pd.read_csv(os.path.join(analysis_cfg["data_path"], 'data.csv'), usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
+    #     user_dfs = []
+    #     for user_id in analysis_cfg['user_ids']:
+    #         user_dfs.append(pd.read_csv(os.path.join(analysis_cfg["data_path"], 'user_{}_tweets.csv'.format(user_id))))
+    #     tweet_user_dfss = []
+    #     for tweet_id in analysis_cfg['tweet_ids']:
+    #         tweet_info = pd.read_csv(os.path.join(analysis_cfg["data_path"], 'tweet_{}.csv'.format(tweet_id)), usecols=['cat', 'data'])
+    #         tweet_info = tweet_info.set_index('cat')['data']
+    #         user_ids = tweet_info['user_ids'][1:-1].replace(" ", "").split(',')
+    #         logger.info(user_ids)
+    #         tweet_user_dfs = []
+    #         for user in user_ids:
+    #             tweet_user_dfs.append(pd.read_csv(os.path.join(analysis_cfg["data_path"], 'user_{}_tweets.csv'.format(user))))
+    #         tweet_user_dfss.append(tweet_user_dfs)
+    #     top_hashtags = pd.read_csv(os.path.join(analysis_cfg["outdir"], 'top_hashtags.csv'), index_col=0)
+    #     compute_stats(logger, data, top_hashtags, user_dfs, tweet_user_dfss, **analysis_cfg)
 
-        # execute notebook / convert to html
-        convert_notebook('analysis', **analysis_cfg)
-        logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+    #     # execute notebook / convert to html
+    #     convert_notebook('analysis', **analysis_cfg)
+    #     logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
 
-    if 'test' in targets:
-        logger.info("starting test target")
-        # EDA
-        logger.info("starting eda target")
-        with open('config/eda-params.json') as fh:
-            eda_cfg = json.load(fh)
-        data = pd.read_csv('test/testdata/tweets.csv', usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
-        logger.info("shape of dataframe is {}".format(data.shape))
-        generate_stats(logger, data, **eda_cfg)
+    # if 'test' in targets:
+    #     logger.info("starting test target")
+    #     # EDA
+    #     logger.info("starting eda target")
+    #     with open('config/eda-params.json') as fh:
+    #         eda_cfg = json.load(fh)
+    #     data = pd.read_csv('test/testdata/tweets.csv', usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
+    #     logger.info("shape of dataframe is {}".format(data.shape))
+    #     generate_stats(logger, data, **eda_cfg)
 
-        # execute notebook / convert to html
-        convert_notebook('eda', **eda_cfg)
-        logger.info("finished eda target: wrote html file to {}".format(os.path.join(eda_cfg["outdir"], 'eda.html')))
+    #     # execute notebook / convert to html
+    #     convert_notebook('eda', **eda_cfg)
+    #     logger.info("finished eda target: wrote html file to {}".format(os.path.join(eda_cfg["outdir"], 'eda.html')))
 
-        # Analysis
-        logger.info("starting analysis target")
-        with open('config/analysis-params.json') as fh:
-            analysis_cfg = json.load(fh)
-        data = pd.read_csv('test/testdata/tweets.csv', usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
-        user_dfs = []
-        for user_id in analysis_cfg['user_ids']:
-            user_dfs.append(pd.read_csv(os.path.join('test/testdata', 'user_{}_tweets.csv'.format(user_id))))
-        tweet_user_dfss = []
-        for tweet_id in analysis_cfg['tweet_ids']:
-            tweet_info = pd.read_csv(os.path.join('test/testdata', 'tweet_{}.csv'.format(tweet_id)), usecols=['cat', 'data'])
-            tweet_info = tweet_info.set_index('cat')['data']
-            user_ids = tweet_info['user_ids'][1:-1].replace(" ", "").split(',')
-            logger.info(user_ids)
-            tweet_user_dfs = []
-            for user in user_ids:
-                tweet_user_dfs.append(pd.read_csv(os.path.join('test/testdata', 'user_{}_tweets.csv'.format(user.replace("'","")))))
-            tweet_user_dfss.append(tweet_user_dfs)
-        top_hashtags = pd.read_csv(os.path.join(analysis_cfg["outdir"], 'top_hashtags.csv'), index_col=0)
-        compute_stats(logger, data, top_hashtags, user_dfs, tweet_user_dfss, **analysis_cfg)
+    #     # Analysis
+    #     logger.info("starting analysis target")
+    #     with open('config/analysis-params.json') as fh:
+    #         analysis_cfg = json.load(fh)
+    #     data = pd.read_csv('test/testdata/tweets.csv', usecols=['entities/hashtags', 'id', 'created_at', 'user/id'])
+    #     user_dfs = []
+    #     for user_id in analysis_cfg['user_ids']:
+    #         user_dfs.append(pd.read_csv(os.path.join('test/testdata', 'user_{}_tweets.csv'.format(user_id))))
+    #     tweet_user_dfss = []
+    #     for tweet_id in analysis_cfg['tweet_ids']:
+    #         tweet_info = pd.read_csv(os.path.join('test/testdata', 'tweet_{}.csv'.format(tweet_id)), usecols=['cat', 'data'])
+    #         tweet_info = tweet_info.set_index('cat')['data']
+    #         user_ids = tweet_info['user_ids'][1:-1].replace(" ", "").split(',')
+    #         logger.info(user_ids)
+    #         tweet_user_dfs = []
+    #         for user in user_ids:
+    #             tweet_user_dfs.append(pd.read_csv(os.path.join('test/testdata', 'user_{}_tweets.csv'.format(user.replace("'","")))))
+    #         tweet_user_dfss.append(tweet_user_dfs)
+    #     top_hashtags = pd.read_csv(os.path.join(analysis_cfg["outdir"], 'top_hashtags.csv'), index_col=0)
+    #     compute_stats(logger, data, top_hashtags, user_dfs, tweet_user_dfss, **analysis_cfg)
 
-        # execute notebook / convert to html
-        convert_notebook('analysis', **analysis_cfg)
-        logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
-        logger.info("finished test target")
+    #     # execute notebook / convert to html
+    #     convert_notebook('analysis', **analysis_cfg)
+    #     logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+    #     logger.info("finished test target")
 
 
 
