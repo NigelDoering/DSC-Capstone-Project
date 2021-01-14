@@ -1,0 +1,11 @@
+2021-01-08 12:32:31,576.576 INFO run - main: STARTING PROGRAM
+2021-01-08 12:32:31,576.576 INFO run - main: starting test target
+2021-01-08 12:32:31,576.576 INFO run - main: starting eda target
+2021-01-08 12:32:31,625.625 INFO run - main: shape of dataframe is (12, 4)
+2021-01-08 12:32:31,626.626 INFO eda - get_top_hashtags: Start generating chart of top hashtags used
+2021-01-08 12:32:31,693.693 INFO eda - get_top_hashtags: Finish generating chart of top hashtags used
+2021-01-08 12:32:31,694.694 INFO eda - get_histogram_posts_by_user: Creating histogram for # of posts by user
+2021-01-08 12:32:32,979.979 INFO eda - get_histogram_hashtags_by_day: Creating histogram for #coronavirus
+2021-01-08 12:32:33,278.278 INFO eda - get_histogram_hashtags_by_day: Creating histogram for #trump
+2021-01-13 19:45:32,989.989 INFO run - main: STARTING PROGRAM
+2021-01-13 19:45:32,989.989 INFO run - main: starting data target

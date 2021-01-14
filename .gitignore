@@ -8,6 +8,7 @@ bin-release/
 .settings/
 ./__pyache__
 ./test
+.example.log
 
 # Executables
 *.swf
