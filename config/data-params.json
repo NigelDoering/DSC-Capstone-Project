@@ -3,9 +3,10 @@
    "consumer_secret_key": "",
    "access_token": "",
    "access_token_secret": "",
-   "bearer_token": "AAAAAAAAAAAAAAAAAAAAAJxsJwEAAAAAue7IK2t1WhRC2TM91b45XhKpBM0%3DdzdP3qUxO4FGzDTEt59iMAJdpn4TbYDWh6ZBU2uJUMbJeplQMQ",
-   "repo_path": "/Users/tanujpankaj/Desktop/dsc180/data",
+   "bearer_token": "",
    "output_path": "/Users/tanujpankaj/Desktop/dsc180/data",
-   "user_ids": ["468646961"],
-   "tweet_ids": []
+   "exclude_replies": true,
+   "include_rts": false,
+   "max_recent_tweets": 5,
+   "tweet_ids": ["1349777071145431043"]
 }

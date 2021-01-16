@@ -19,9 +19,10 @@
 * Go inside docker container
 * Set data parameters in config/data-params.json.
     * consumer_key, consumer_secret_key, access_token, access_token_secret, bearer_token: all Twitter API credentials.
-    * repo_path: path to directory that contains Pancea Lab GitHub repo
-    * start_date, end_date: dates to collect Pancea Lab tweets from (leave both as "" to skip this part) e.g. "2020-06-20"
     * output_path: path to directory to write data to
-    * user_ids (list of str): Twitter User IDs to collect tweets from for the analysis portion
+    * exclude_replies (bool): if true, excludes replies for each of the users that retweeted the major tweets being analyzed
+    * include_rts (bool): if true, includes retweets for each of the users that retweeted the major tweets being analyzed
+    * max_recent_tweets (int): maximum number of recent tweets to get from each of the users that retweeted the major tweets being analyzed
+    * tweets_ids (list of str): major Tweet IDs to analyze
 * run 'python run.py data' in root directory of repo
 * This will only collect the data
