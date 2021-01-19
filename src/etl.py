@@ -13,8 +13,7 @@ import pickle
 
 
 # Credit to: https://gist.github.com/yanofsky/5436496
-
-def get_data(logger, consumer_key: str, consumer_secret_key: str, 
+def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, 
     access_token: str, access_token_secret: str, bearer_token: str, 
     output_path: str, exclude_replies: bool, include_rts: bool, max_recent_tweets: float, tweet_ids=[]):
     '''
@@ -90,3 +89,82 @@ def get_data(logger, consumer_key: str, consumer_secret_key: str,
                     writer = csv.writer(f)
                     writer.writerow(["id", "created_at", "text"])
                     writer.writerows(outtweets)
+
+def get_data_pancea_tweets(logger, consumer_key: str, consumer_secret_key: str, 
+    access_token: str, access_token_secret: str, bearer_token: str, 
+    repo_path: str, start_date: str, end_date: str, clean: bool, output_path: str, frac: float):
+    '''
+    Retrieve Coronavirus tweets from multiple days from GitHub repo and write to csv.
+    Returns pandas dataframe of hydrated tweets.
+    @repo_path: path to the repo.
+    @start_date: start date of tweets (inclusive)
+    @end_date: end date of tweets (exclusive)
+    @clean: uses the cleaned set which does not include retweets, default False.
+    @output_path: if provided, writes dataframe to output path.
+    @frac: if provided, uses only this fraction of the tweets.
+    '''
+    # Tweets
+    logger.info('Collecting Coronavirus Pancea Lab tweets')
+    if len(start_date) != 0 and len(end_date) != 0:
+        dfs = []
+        lst = list(pd.date_range(start=start_date,end=end_date))
+        dates = [date_obj.strftime('%Y-%m-%d') for date_obj in lst]
+
+        # Gather tweet IDS
+        for date in dates:
+            # Unzip tsv.gz file
+            logger.info('Processing {}...'.format(date))
+            fp = repo_path
+            rp = 'covid19_twitter/dailies/{}'.format(date)
+            if clean:
+                fn = '{}_clean-dataset.tsv.gz'.format(date)
+            else:
+                fn = '{}-dataset.tsv.gz'.format(date)
+                fp = repo_path
+                rp = 'covid19_twitter/dailies/{}'.format(date)
+            if clean:
+                fn = '{}_clean-dataset.tsv.gz'.format(date)
+            else:
+                fn = '{}-dataset.tsv.gz'.format(date)
+
+            filename = os.path.join(fp, rp, fn)
+            assert os.path.isfile(filename), "Make sure that repo path and date is valid {}".format(filename) 
+
+            with gzip.open(filename, 'rb') as f_in:
+                with open(filename[:-3], 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+
+            # Read in tsv
+            df = pd.read_csv(filename[:-3], sep='\t')
+
+            # Append tweet IDs
+            if frac:
+                dfs.append(df.sample(frac=frac)['tweet_id'])
+                logger.info('Adding {} tweets'.format(int(len(df)*frac)))
+            else:
+                dfs.append(df['tweet_id'])
+                logger.info('Adding {} tweets'.format(len(df)))
+        df = pd.concat(dfs)
+            
+        # write tweet ids to txt file
+        tweet_id_fp = os.path.join(output_path, start_date + '-' + end_date +'.txt')
+        logger.info('Writing tweets to txt file {}...'.format(tweet_id_fp))
+        df.to_csv(tweet_id_fp, index=False, header=False)
+
+        # Use library
+        t = Twarc(consumer_key, consumer_secret_key, access_token, access_token_secret)
+        list_dicts = []
+        for tweet in t.hydrate(open(os.path.join(output_path, start_date + '-' + end_date +'.txt'))):
+            orig = flatten(tweet, reducer='path')
+            new = {}
+            for col in ['entities/hashtags', 'id', 'created_at', 'user/id']:
+                new[col] = orig[col]
+            list_dicts.append(new)
+            # print(new)
+
+        df = pd.DataFrame(list_dicts[:])
+        
+        if output_path:
+            logging.info('Writing to {}'.format(os.path.join(output_path, 'data.csv')))
+            df.to_csv(os.path.join(output_path, 'data.csv'))
+    logger.info('Collected Coronavirus Pancea Lab tweets')

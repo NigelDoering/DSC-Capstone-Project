@@ -8,7 +8,8 @@ import logging
 
 sys.path.insert(0, 'src')
 
-from etl import get_data
+from etl import get_data_major_tweets
+from etl import get_data_pancea_tweets
 from eda import generate_stats
 from analysis import compute_stats
 from utils import convert_notebook
@@ -32,12 +33,24 @@ def main(targets):
     logger.info('STARTING PROGRAM')
 
     if 'data' in targets or 'all' in targets:
-        logger.info("starting data target")
-        with open('config/data-params.json') as fh:
+        logger.info("starting data-major-tweets target")
+        with open('config/data-params-major-tweets.json') as fh:
             data_cfg = json.load(fh)
-        data = get_data(logger, **data_cfg)
+        with open('config/twitter-api-keys.json') as fh:
+            twitter_cfg = json.load(fh)
+        data = get_data_major_tweets(logger, **data_cfg, **twitter_cfg)
         # make the data target
-        logger.info("finished data target")
+        logger.info("finished data-major-tweets target")
+
+    if 'data' in targets or 'all' in targets:
+        logger.info("starting data-pancea-tweets target")
+        with open('config/data-params-pancea-tweets.json') as fh:
+            data_cfg = json.load(fh)
+        with open('config/twitter-api-keys.json') as fh:
+            twitter_cfg = json.load(fh)
+        data = get_data_pancea_tweets(logger, **data_cfg, **twitter_cfg)
+        # make the data target
+        logger.info("finished data-pancea-tweets target")
 
     # if 'eda' in targets or 'all' in targets:
     #     logger.info("starting eda target")

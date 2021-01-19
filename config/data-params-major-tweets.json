@@ -1,12 +1,7 @@
 {
-   "consumer_key": "",
-   "consumer_secret_key": "",
-   "access_token": "",
-   "access_token_secret": "",
-   "bearer_token": "",
    "output_path": "/Users/tanujpankaj/Desktop/dsc180/data",
    "exclude_replies": true,
    "include_rts": false,
-   "max_recent_tweets": 5,
+   "max_recent_tweets": 25,
    "tweet_ids": ["1349777071145431043"]
 }
