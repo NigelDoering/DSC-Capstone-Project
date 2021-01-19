@@ -9,3 +9,40 @@
 2021-01-08 12:32:33,278.278 INFO eda - get_histogram_hashtags_by_day: Creating histogram for #trump
 2021-01-13 19:45:32,989.989 INFO run - main: STARTING PROGRAM
 2021-01-13 19:45:32,989.989 INFO run - main: starting data target
+2021-01-15 19:04:21,797.797 INFO run - main: STARTING PROGRAM
+2021-01-15 19:04:21,797.797 INFO run - main: starting data target
+2021-01-15 19:21:44,875.875 INFO run - main: STARTING PROGRAM
+2021-01-15 19:21:44,876.876 INFO run - main: starting data target
+2021-01-15 19:21:45,148.148 INFO etl - get_data: <class 'tweepy.models.Status'>
+2021-01-15 19:21:45,714.714 INFO etl - get_data: Collecting user 133286878 tweets
+2021-01-15 19:21:46,007.007 INFO etl - get_data: getting tweets before 1348136998461124608
+2021-01-15 19:21:46,265.265 INFO etl - get_data: 9 tweets downloaded so far
+2021-01-15 19:21:46,266.266 INFO etl - get_data: Collecting user 1348365816870309889 tweets
+2021-01-15 19:21:46,442.442 INFO etl - get_data: Collecting user 861770327742918656 tweets
+2021-01-15 19:21:46,946.946 INFO etl - get_data: Collecting user 2683342672 tweets
+2021-01-15 19:21:47,181.181 INFO etl - get_data: getting tweets before 1349789478970384388
+2021-01-15 19:21:47,547.547 INFO etl - get_data: 23 tweets downloaded so far
+2021-01-15 19:21:47,548.548 INFO etl - get_data: Collecting user 100343376 tweets
+2021-01-15 19:21:47,808.808 INFO etl - get_data: Collecting user 66797679 tweets
+2021-01-15 19:21:48,151.151 INFO etl - get_data: Collecting user 1347963374370512899 tweets
+2021-01-15 19:21:48,328.328 INFO etl - get_data: Collecting user 819305793338097668 tweets
+2021-01-15 19:21:48,530.530 INFO etl - get_data: getting tweets before 1348415382156177408
+2021-01-15 19:21:48,775.775 INFO etl - get_data: 2 tweets downloaded so far
+2021-01-15 19:21:48,776.776 INFO etl - get_data: Collecting user 2786449829 tweets
+2021-01-15 19:21:49,054.054 INFO etl - get_data: Collecting user 3244963439 tweets
+2021-01-15 19:21:49,433.433 INFO etl - get_data: Collecting user 941013307 tweets
+2021-01-15 19:21:49,683.683 INFO etl - get_data: Collecting user 1318395032022347776 tweets
+2021-01-15 19:21:49,877.877 INFO etl - get_data: getting tweets before 1347788476842823683
+2021-01-15 19:21:50,137.137 INFO etl - get_data: 7 tweets downloaded so far
+2021-01-15 19:21:50,138.138 INFO etl - get_data: Collecting user 1308049568920207365 tweets
+2021-01-15 19:21:50,307.307 INFO etl - get_data: Collecting user 1220044964928749569 tweets
+2021-01-15 19:21:50,825.825 INFO etl - get_data: Collecting user 4219827880 tweets
+2021-01-15 19:21:51,077.077 INFO etl - get_data: Collecting user 2544027795 tweets
+2021-01-15 19:21:51,320.320 INFO etl - get_data: Collecting user 837178863285231616 tweets
+2021-01-15 19:21:51,524.524 INFO etl - get_data: Collecting user 898013169024614400 tweets
+2021-01-15 19:21:51,899.899 INFO etl - get_data: Collecting user 4587533954 tweets
+2021-01-15 19:21:52,110.110 INFO etl - get_data: getting tweets before 1346992232394612737
+2021-01-15 19:21:52,320.320 INFO etl - get_data: 3 tweets downloaded so far
+2021-01-15 19:21:52,320.320 INFO etl - get_data: getting tweets before 1344481999587721216
+2021-01-15 19:21:52,554.554 INFO etl - get_data: 3 tweets downloaded so far
+2021-01-15 19:21:52,555.555 INFO run - main: finished data target
