@@ -24,5 +24,5 @@
     * clean (bool): True uses the cleaned set which does not include retweets
     * output_path: path to directory to write data to
     * frac (float): uses only this fraction of the tweets
-* run 'python run.py data' in root directory of repo
+* run 'python run.py data-major' and/or 'python run.py data-pancea' in root directory of repo
 * This will only collect the data
