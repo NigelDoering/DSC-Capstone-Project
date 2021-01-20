@@ -32,7 +32,7 @@ def main(targets):
     logger.addHandler(fh)
     logger.info('STARTING PROGRAM')
 
-    if 'data' in targets or 'all' in targets:
+    if 'analysis' in targets or 'all' in targets:
         logger.info("starting data-major-tweets target")
         with open('config/data-params-major-tweets.json') as fh:
             data_cfg = json.load(fh)
