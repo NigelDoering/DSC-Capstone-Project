@@ -35,10 +35,11 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str,
             'user/id': status.user.id,
             'text': status.text
         }
-        user_ids = []
+        user_ids = {}
         retweets_list = api.retweets(tweet_id)
         for retweet in retweets_list:
-            user_ids.append(retweet.user.id)
+            user_ids[str(retweet.user.id)] = None
+            # user_ids.append(retweet.user.id)
         tweet_info['user_ids'] = user_ids
         f = open(fn, 'wb')
         pickle.dump(tweet_info, f)
