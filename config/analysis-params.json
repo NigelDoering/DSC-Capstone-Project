@@ -1,0 +1,10 @@
+{
+    "data_path": "/Users/tanujpankaj/Desktop/dsc180/data/",
+    "outdir": "/Users/tanujpankaj/Desktop/dsc180/visualizations/",
+    "n_hashtags": 25,
+    "case_sensitive": false,
+    "marker_hashtags": {"science": [["stayhome"], ["plandemic"]],
+        "political": [["chinavirus"], ["trumpvirus"]],
+        "moderacy": [["trumpvirus", "chinavirus"], ["pandemic", "lockdown"]]},  
+    "tweet_ids": ["1349777071145431043"]
+}
