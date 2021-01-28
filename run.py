@@ -5,6 +5,7 @@ import json
 import pandas as pd
 import os
 import logging
+import pickle
 
 sys.path.insert(0, 'src')
 
@@ -51,6 +52,27 @@ def main(targets):
         data = get_data_pancea_tweets(logger, **data_cfg, **twitter_cfg)
         # make the data target
         logger.info("finished data-pancea-tweets target")
+
+    if 'analysis' in targets or 'all' in targets:
+        with open('config/analysis-params.json') as fh:
+            analysis_cfg = json.load(fh)
+        
+        tweets = {}
+        for tweet_id in analysis_cfg['tweet_ids']:
+            path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
+            tweet = pickle.load(open(path, 'rb'))
+            tweets[tweet_id] = tweet
+        
+        for key, value in tweets.items():
+            for user_id in list(value['user_ids'].keys()):
+                value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))
+
+        data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')).drop(columns=['Unnamed: 0'])
+        compute_stats(logger, tweets, data, **analysis_cfg)
+
+        # execute notebook / convert to html
+        convert_notebook('analysis', **analysis_cfg)
+        logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
 
     # if 'eda' in targets or 'all' in targets:
     #     logger.info("starting eda target")
