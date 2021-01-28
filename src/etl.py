@@ -33,8 +33,9 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str,
             'id': status.id,
             'created_at': status.created_at,
             'user/id': status.user.id,
-            'text': status.text
-        }
+            'text': status.text,
+            'entities/hashtags': status.entities['hashtags'] # see if this works
+        } 
         user_ids = {}
         retweets_list = api.retweets(tweet_id)
         for retweet in retweets_list:
@@ -82,13 +83,13 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str,
                 alltweets = alltweets[:max_recent_tweets]
         
             #transform the tweepy tweets into a 2D array that will populate the csv 
-            outtweets = [[tweet.id_str, tweet.created_at, tweet.text] for tweet in alltweets]
+            outtweets = [[tweet.id_str, tweet.created_at, tweet.text, tweet.entities['hashtags']] for tweet in alltweets]
 
             if output_path:
                 fn = os.path.join(output_path, 'user_{}_tweets.csv'.format(user_id))
                 with open(fn, 'w') as f:
                     writer = csv.writer(f)
-                    writer.writerow(["id", "created_at", "text"])
+                    writer.writerow(["id", "created_at", "text", "entities/hashtags"])
                     writer.writerows(outtweets)
 
 def get_data_pancea_tweets(logger, consumer_key: str, consumer_secret_key: str, 
