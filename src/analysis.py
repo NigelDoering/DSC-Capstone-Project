@@ -76,7 +76,7 @@ def compute_hashtag_polarities(logger, data, top_hashtags, outdir, n_hashtags, m
     #cols.append('index')
     top_hashtags[cols].to_csv(os.path.join(outdir, 'polarities.csv'))
 
-    print(top_hashtags.columns)
+    # print(top_hashtags.columns)
     logger.info('Finish computing hashtag polarities')
     return top_hashtags
 
