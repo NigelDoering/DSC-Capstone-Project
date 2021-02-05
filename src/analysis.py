@@ -81,8 +81,37 @@ def compute_hashtag_polarities(logger, data, top_hashtags, outdir, n_hashtags, m
     return top_hashtags
 
 
-def compute_stats(logger, tweets, data, tweet_ids, data_path, outdir, n_hashtags, case_sensitive, marker_hashtags):
+def compute_hashtag_stats(logger, tweets, data, tweet_ids, data_path, outdir, 
+    n_hashtags, case_sensitive, marker_hashtags, 
+    calculate_hashtag_polarities, calculate_user_polarities):
+    logger.info('hello from compute hashtag stats')
     os.makedirs(outdir, exist_ok=True)
     top_hashtags = get_top_hashtags(logger, data, outdir, n_hashtags, case_sensitive)
     compute_hashtag_polarities(logger, data, top_hashtags, outdir, n_hashtags, marker_hashtags, case_sensitive)
+    return
+
+def get_hashtag_counts(user_df, case_sensitive):
+    def get_hashtags(input_str):
+        if type(input_str) != str:
+            return []
+        if not case_sensitive:
+            input_str = input_str.lower()
+        return [elem[9:-1].replace('_', '').replace('ー', '') for elem in re.findall("'text': '\w+'", input_str)]
+    user_df['list_hashtags'] = user_df['entities/hashtags'].apply(get_hashtags)
+    hashtag_counts = pd.Series(user_df['list_hashtags'].sum()).value_counts()
+    return hashtag_counts
+
+
+def compute_user_stats(logger, tweets, polarities, tweet_ids, data_path, outdir, n_hashtags, case_sensitive, marker_hashtags,
+    calculate_hashtag_polarities, calculate_user_polarities):
+    print(polarities.set_index('index'))
+    for tweet_id, user_dict in tweets.items():
+        for user_id, user_df in user_dict['user_ids'].items():
+            print(user_id)
+            print(user_df.shape)
+            ht_counts = get_hashtag_counts(user_df, case_sensitive)
+            print(polarities.join(pd.DataFrame(ht_counts)))
+            # print(polarities.join(ht_counts))
+            # print(get_hashtag_counts(user_df, case_sensitive))
+    logger.info('hello from compute user stats')
     return
