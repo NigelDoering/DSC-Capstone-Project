@@ -104,14 +104,27 @@ def get_hashtag_counts(user_df, case_sensitive):
 
 def compute_user_stats(logger, tweets, polarities, tweet_ids, data_path, outdir, n_hashtags, case_sensitive, marker_hashtags,
     calculate_hashtag_polarities, calculate_user_polarities):
-    print(polarities.set_index('index'))
+    logger.info('computing user stats')
     for tweet_id, user_dict in tweets.items():
+        data = {}
+        data['ct'] = []
+        data['user_id'] = []
+        for dim in list(marker_hashtags.keys()):
+            data[dim] = []
+
         for user_id, user_df in user_dict['user_ids'].items():
             print(user_id)
-            print(user_df.shape)
+            print(user_df.columns)
             ht_counts = get_hashtag_counts(user_df, case_sensitive)
-            print(polarities.join(pd.DataFrame(ht_counts)))
-            # print(polarities.join(ht_counts))
-            # print(get_hashtag_counts(user_df, case_sensitive))
-    logger.info('hello from compute user stats')
+            df = polarities.join(pd.DataFrame(ht_counts)).fillna(0).rename(columns={0: 'ct'})
+            data['user_id'].append(user_id)
+            data['ct'].append(df['ct'].sum())
+            for dim in list(marker_hashtags.keys()):
+                data[dim].append((df['ct']*df[dim]).sum())
+                # print(df['ct'])
+                # print(df[dim])
+                # data[dim].append((data['ct']*data[dim]))     
+        pd.DataFrame(data).to_csv(os.path.join(outdir, 'tweet_{}_user_polarities.csv'.format(tweet_id)))
+
+    logger.info('computed user stats')
     return
