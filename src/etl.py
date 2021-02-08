@@ -12,13 +12,31 @@ import csv
 import pickle
 
 
-# Credit to: https://gist.github.com/yanofsky/5436496
+
+def get_data(logger, pancea_tweets: bool, major_tweets: bool, repo_path: str, start_date: str, end_date: str, clean: bool,
+    output_path: str, frac: float, exclude_replies: bool, include_rts: bool,
+    max_recent_tweets: float, consumer_key: str, consumer_secret_key: str, 
+    access_token: str, access_token_secret: str, bearer_token: str, tweet_ids=[]):
+    if pancea_tweets:
+        get_data_pancea_tweets(logger, consumer_key, consumer_secret_key, 
+        access_token, access_token_secret, bearer_token, 
+        repo_path, start_date, end_date, clean, output_path, frac)
+
+    if major_tweets:
+        get_data_major_tweets(logger, consumer_key, consumer_secret_key,
+        access_token, access_token_secret, bearer_token,
+        output_path, exclude_replies, include_rts, max_recent_tweets, tweet_ids)
+
+    return
+
+# Credit to: https://gist.github.com/yanofsky/5436496 for the Major tweets
 def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, 
     access_token: str, access_token_secret: str, bearer_token: str, 
     output_path: str, exclude_replies: bool, include_rts: bool, max_recent_tweets: float, tweet_ids=[]):
     '''
     Retrieve user tweets and write to csv.
     '''
+    logger.info("collecting major tweet data")
     # Tweepy Authorization
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret_key)
     auth.set_access_token(access_token, access_token_secret)
@@ -91,19 +109,13 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str,
                     writer = csv.writer(f)
                     writer.writerow(["id", "created_at", "text", "entities/hashtags"])
                     writer.writerows(outtweets)
+    logger.info("collected major tweet data")
 
 def get_data_pancea_tweets(logger, consumer_key: str, consumer_secret_key: str, 
     access_token: str, access_token_secret: str, bearer_token: str, 
     repo_path: str, start_date: str, end_date: str, clean: bool, output_path: str, frac: float):
     '''
     Retrieve Coronavirus tweets from multiple days from GitHub repo and write to csv.
-    Returns pandas dataframe of hydrated tweets.
-    @repo_path: path to the repo.
-    @start_date: start date of tweets (inclusive)
-    @end_date: end date of tweets (exclusive)
-    @clean: uses the cleaned set which does not include retweets, default False.
-    @output_path: if provided, writes dataframe to output path.
-    @frac: if provided, uses only this fraction of the tweets.
     '''
     # Tweets
     logger.info('Collecting Coronavirus Pancea Lab tweets')

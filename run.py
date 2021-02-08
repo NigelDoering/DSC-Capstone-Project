@@ -9,10 +9,11 @@ import pickle
 
 sys.path.insert(0, 'src')
 
-from etl import get_data_major_tweets
-from etl import get_data_pancea_tweets
+from etl import get_data
+#from etl import get_data_pancea_tweets
 from eda import generate_stats
-from analysis import compute_stats
+from analysis import compute_hashtag_stats
+from analysis import compute_user_stats
 from utils import convert_notebook
 from logging.handlers import RotatingFileHandler
 
@@ -33,42 +34,65 @@ def main(targets):
     logger.addHandler(fh)
     logger.info('STARTING PROGRAM')
 
-    if 'data-major' in targets or 'all' in targets:
-        logger.info("starting data-major-tweets target")
-        with open('config/data-params-major-tweets.json') as fh:
+    if 'data' in targets or 'all' in targets:
+        with open('config/data-params.json') as fh:
             data_cfg = json.load(fh)
         with open('config/twitter-api-keys.json') as fh:
             twitter_cfg = json.load(fh)
-        data = get_data_major_tweets(logger, **data_cfg, **twitter_cfg)
-        # make the data target
-        logger.info("finished data-major-tweets target")
-
-    if 'data-pancea' in targets or 'all' in targets:
-        logger.info("starting data-pancea-tweets target")
-        with open('config/data-params-pancea-tweets.json') as fh:
-            data_cfg = json.load(fh)
-        with open('config/twitter-api-keys.json') as fh:
-            twitter_cfg = json.load(fh)
-        data = get_data_pancea_tweets(logger, **data_cfg, **twitter_cfg)
-        # make the data target
-        logger.info("finished data-pancea-tweets target")
+        get_data(logger, **data_cfg, **twitter_cfg)
 
     if 'analysis' in targets or 'all' in targets:
         with open('config/analysis-params.json') as fh:
             analysis_cfg = json.load(fh)
-        
-        tweets = {}
-        for tweet_id in analysis_cfg['tweet_ids']:
-            path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
-            tweet = pickle.load(open(path, 'rb'))
-            tweets[tweet_id] = tweet
-        
-        for key, value in tweets.items():
-            for user_id in list(value['user_ids'].keys()):
-                value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))
 
-        data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')).drop(columns=['Unnamed: 0'])
-        compute_stats(logger, tweets, data, **analysis_cfg)
+        # do hashtag stats
+        if analysis_cfg['calculate_hashtag_polarities']:
+            tweets = {}
+            for tweet_id in analysis_cfg['tweet_ids']:
+                path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
+                tweet = pickle.load(open(path, 'rb'))
+                tweets[tweet_id] = tweet
+            
+            for key, value in tweets.items():
+                for user_id in list(value['user_ids'].keys()):
+                    value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))
+
+            data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')).drop(columns=['Unnamed: 0'])
+            compute_hashtag_stats(logger, tweets, data, **analysis_cfg)
+
+        # do user stats
+        if analysis_cfg['calculate_user_polarities']:
+            data = pd.read_csv(os.path.join(analysis_cfg['outdir'], 'polarities.csv')).drop(columns=['Unnamed: 0'])
+            compute_user_stats(logger, tweets, data, **analysis_cfg)
+
+        # execute notebook / convert to html
+        convert_notebook('analysis', **analysis_cfg)
+        logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+
+
+    if 'test' in targets:
+        with open('config/analysis-params.json') as fh:
+            analysis_cfg = json.load(fh)
+
+        # do hashtag stats
+        if analysis_cfg['calculate_hashtag_polarities']:
+            tweets = {}
+            for tweet_id in analysis_cfg['tweet_ids']:
+                path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
+                tweet = pickle.load(open(path, 'rb'))
+                tweets[tweet_id] = tweet
+            print(tweets)
+            for key, value in tweets.items():
+                for user_id in list(value['user_ids'].keys()):
+                    value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))
+
+            data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')) #.drop(columns=['Unnamed: 0'])
+            compute_hashtag_stats(logger, tweets, data, **analysis_cfg)
+
+        # do user stats
+        if analysis_cfg['calculate_user_polarities']:
+            data = pd.read_csv(os.path.join(analysis_cfg['outdir'], 'polarities.csv')).drop(columns=['Unnamed: 0'])
+            compute_user_stats(logger, tweets, data, **analysis_cfg)
 
         # execute notebook / convert to html
         convert_notebook('analysis', **analysis_cfg)
