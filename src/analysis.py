@@ -120,10 +120,7 @@ def compute_user_stats(logger, tweets, polarities, tweet_ids, data_path, outdir,
             data['user_id'].append(user_id)
             data['ct'].append(df['ct'].sum())
             for dim in list(marker_hashtags.keys()):
-                data[dim].append((df['ct']*df[dim]).sum())
-                # print(df['ct'])
-                # print(df[dim])
-                # data[dim].append((data['ct']*data[dim]))     
+                data[dim].append((df['ct']*df[dim]).sum())    
         pd.DataFrame(data).to_csv(os.path.join(outdir, 'tweet_{}_user_polarities.csv'.format(tweet_id)))
 
     logger.info('computed user stats')

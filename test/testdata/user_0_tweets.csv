@@ -1,0 +1,5 @@
+id,created_at,text,entities/hashtags
+3,Sun Mar 22 05:52:00 +0000 2020,hello,"[{'text': 'covid19', 'indices': [0, 1]}]"
+6,Sun Mar 22 05:52:00 +0000 2020,goodbye,"[{'text': 'hoax', 'indices': [0, 1]}, {'text': 'trump', 'indices': [0, 1]}]"
+9,Mon Mar 23 05:52:00 +0000 2020,goodmorning,"[{'text': 'wuHaNviRus', 'indices': [0, 1]}, {'text': 'trump', 'indices': [0, 1]}, {'text': 'socialdistancing', 'indices': [0, 1]}]"
+15,Mon Mar 23 05:52:00 +0000 2020,superbowl,"[{'text': 'vaccine', 'indices': [0, 1]}]"
