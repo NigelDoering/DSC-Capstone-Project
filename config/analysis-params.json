@@ -1,13 +1,12 @@
 {
     "calculate_hashtag_polarities": true,
-    "data_path": "test/testdata/",
-    "outdir": "test/visualizations/",
-    "n_hashtags": 3,
+    "data_path": "/Users/tanujpankaj/Desktop/dsc180/data",
+    "outdir": "/Users/tanujpankaj/Desktop/dsc180/visualizations",
+    "n_hashtags": 200,
     "case_sensitive": false,
     "marker_hashtags": {"science": [["stayhome"], ["plandemic"]],
         "political": [["chinavirus"], ["trumpvirus"]],
         "moderacy": [["trumpvirus", "chinavirus"], ["pandemic", "lockdown"]]},  
-
     "calculate_user_polarities": true,
-    "tweet_ids": ["323"]
+    "tweet_ids": ["1358980119772205056"]
 }

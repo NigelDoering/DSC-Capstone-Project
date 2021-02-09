@@ -81,7 +81,6 @@ def main(targets):
                 path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
                 tweet = pickle.load(open(path, 'rb'))
                 tweets[tweet_id] = tweet
-            print(tweets)
             for key, value in tweets.items():
                 for user_id in list(value['user_ids'].keys()):
                     value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))

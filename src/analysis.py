@@ -113,8 +113,8 @@ def compute_user_stats(logger, tweets, polarities, tweet_ids, data_path, outdir,
             data[dim] = []
 
         for user_id, user_df in user_dict['user_ids'].items():
-            print(user_id)
-            print(user_df.columns)
+            #print(user_id)
+            #print(user_df.columns)
             ht_counts = get_hashtag_counts(user_df, case_sensitive)
             df = polarities.join(pd.DataFrame(ht_counts)).fillna(0).rename(columns={0: 'ct'})
             data['user_id'].append(user_id)
