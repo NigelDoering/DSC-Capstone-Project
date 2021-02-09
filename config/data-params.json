@@ -1,5 +1,5 @@
 {
-    "pancea_tweets": true,
+    "pancea_tweets": false,
     "repo_path": "/Users/tanujpankaj/Desktop/dsc180/data",
     "start_date": "2020-03-22",
     "end_date": "2020-04-30",
@@ -10,6 +10,6 @@
     "major_tweets": true,
     "exclude_replies": true,
     "include_rts": false,
-    "max_recent_tweets": 50,
-    "tweet_ids": ["1357442130571104256"]
- }
+    "max_recent_tweets": 1000,
+    "tweet_ids": ["1358980119772205056"]
+}
