@@ -44,6 +44,7 @@
 * Set User polaritiy parameters in config/analysis-params.json.
     * calculate_user_polarities (bool): Toggle on/off to calcualte user polarities (the other parameters will be ignored if this is false). Keep in mind this analysis needs outputs from hashtag polarities.
     * tweet_ids (list): List of tweet IDs in which to take the users who retweeted and calculate the polarities. 
+* run 'python run.py analysis' in root directory of repo (Keep in mind this is dependent on having already collected data)
 #### Test
 * run 'python run.py test' in root directory of repo
 * Look in /test/ for results
