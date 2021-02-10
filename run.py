@@ -48,6 +48,12 @@ def main(targets):
         # do hashtag stats
         if analysis_cfg['calculate_hashtag_polarities']:
             tweets = {}
+            data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')).drop(columns=['Unnamed: 0'])
+            compute_hashtag_stats(logger, tweets, data, **analysis_cfg)
+
+        # do user stats
+        if analysis_cfg['calculate_user_polarities']:
+            tweets = {}
             for tweet_id in analysis_cfg['tweet_ids']:
                 path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
                 tweet = pickle.load(open(path, 'rb'))
@@ -56,18 +62,15 @@ def main(targets):
             for key, value in tweets.items():
                 for user_id in list(value['user_ids'].keys()):
                     value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))
-
-            data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')).drop(columns=['Unnamed: 0'])
-            compute_hashtag_stats(logger, tweets, data, **analysis_cfg)
-
-        # do user stats
-        if analysis_cfg['calculate_user_polarities']:
             data = pd.read_csv(os.path.join(analysis_cfg['outdir'], 'polarities.csv')).drop(columns=['Unnamed: 0'])
             compute_user_stats(logger, tweets, data, **analysis_cfg)
 
         # execute notebook / convert to html
-        convert_notebook('analysis', **analysis_cfg)
-        logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+        try:
+            convert_notebook('analysis', **analysis_cfg)
+            logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+        except:
+            logger.info('finished analysis but error in making target')
 
 
     if 'test' in targets:
@@ -77,6 +80,12 @@ def main(targets):
         # do hashtag stats
         if analysis_cfg['calculate_hashtag_polarities']:
             tweets = {}
+            data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')) #.drop(columns=['Unnamed: 0'])
+            compute_hashtag_stats(logger, tweets, data, **analysis_cfg)
+
+        # do user stats
+        if analysis_cfg['calculate_user_polarities']:
+            tweets = {}
             for tweet_id in analysis_cfg['tweet_ids']:
                 path = os.path.join(analysis_cfg['data_path'], 'tweet_{}.csv'.format(tweet_id))
                 tweet = pickle.load(open(path, 'rb'))
@@ -84,18 +93,15 @@ def main(targets):
             for key, value in tweets.items():
                 for user_id in list(value['user_ids'].keys()):
                     value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'user_{}_tweets.csv'.format(user_id)))
-
-            data = pd.read_csv(os.path.join(analysis_cfg['data_path'], 'data.csv')) #.drop(columns=['Unnamed: 0'])
-            compute_hashtag_stats(logger, tweets, data, **analysis_cfg)
-
-        # do user stats
-        if analysis_cfg['calculate_user_polarities']:
             data = pd.read_csv(os.path.join(analysis_cfg['outdir'], 'polarities.csv')).drop(columns=['Unnamed: 0'])
             compute_user_stats(logger, tweets, data, **analysis_cfg)
 
         # execute notebook / convert to html
-        convert_notebook('analysis', **analysis_cfg)
-        logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+        try:
+            convert_notebook('analysis', **analysis_cfg)
+            logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+        except:
+            logger.info('finished analysis but error in making target')
     return
 
 
