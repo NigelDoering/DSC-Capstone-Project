@@ -9,7 +9,7 @@ bin-release/
 ./__pyache__
 ./test
 .example.log
-config/data-params.json
+.config/
 
 # Executables
 *.swf
