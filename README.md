@@ -1,4 +1,4 @@
-# DSC180A-Replication1
+# Data Science Capstone Project
 
 ## Data
 ### Info
