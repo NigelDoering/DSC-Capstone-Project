@@ -12,6 +12,7 @@
 * Set twitter API Keys in config/twitter-api-keys.json
 #### Data 
 * Go inside docker container
+* Make sure directories exist
 * Add .txt files with Tweet IDs from https://tweetsets.library.gwu.edu/ to some directory where preprocessed data will be stored. (E.g. cnn.txt in /data/preprocessed directory)
 * Use this hydrator https://github.com/DocNow/hydrator to hydrate these tweets and make sure there is a .csv file in the same directory (E.g. cnn.csv in /data/preprocessed)
 * Set data parameters in config/data-params.json

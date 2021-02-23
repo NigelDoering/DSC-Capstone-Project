@@ -1,6 +1,6 @@
 {
     "preprocessed_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/preprocessed",
-    "output_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/training_data",
+    "training_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/training_data",
     "dims": ["pol_rightness", "credibility", "moderacy"],
     "labels": {"cnn": [-2, 2, 2],
                "dailypress": [1, 4, 1],
@@ -12,9 +12,9 @@
                "nypost": [1, 2, 1],
                "oann": [3, 1, 3]},
 
-    "output_user_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/user_data",
+    "user_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/user_data",
     "exclude_replies": true,
     "include_rts": false,
-    "max_recent_tweets": 25,
-    "tweet_ids": ["1361846180506972161", "1361747570129788930"]
+    "max_recent_tweets": 10000,
+    "tweet_ids": ["1346674133111865347"]
 }

@@ -1,8 +1,6 @@
 {
+    "training_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/training_data",
     "model_path": "/Users/tanujpankaj/Desktop/dsc180/data/model",
-    "user_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/user_data",
     "dims": ["pol_rightness", "credibility", "moderacy"],
-    "tweet_ids": ["1346674133111865347"],
-    "flagged": {"1346674133111865347": true},
     "outdir": "/Users/tanujpankaj/Desktop/dsc180/data/visualizations"
 }
