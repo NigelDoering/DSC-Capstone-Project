@@ -10,6 +10,7 @@ bin-release/
 ./test
 .example.log
 .config/
+./notebooks/polarities.csv
 
 # Executables
 *.swf
