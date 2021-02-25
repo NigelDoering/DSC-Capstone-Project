@@ -20,25 +20,28 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 
-def train_model(logger, df, training_data_path, model_path, dims, outdir):
+def train_model(logger, df, training_data_path, model_path, dims, fit_priors, max_dfs, min_dfs, n_splits, outdir):
     # Clean Data
     df['text'] = df['text'].apply(lambda x: x.replace('#', '').replace('@', ''))
 
     # Loop through dimensios
     results = {}
+    i = 0
     for dim in dims:
         logger.info('Dimension: {}'.format(dim))
 
         # Create model
-        count_vect = CountVectorizer(stop_words='english', max_df=0.3, min_df=0.000002)
+        count_vect = CountVectorizer(stop_words='english', max_df=max_dfs[i], min_df=min_dfs[i])
         tfidf_transformer = TfidfTransformer()
-        clf = MultinomialNB(fit_prior=False)
+        clf = MultinomialNB(fit_prior=fit_priors[i])
         text_clf = Pipeline([('vect', count_vect), ('tfidf', tfidf_transformer), ('clf', clf)])
+
+        i += 1
 
         # Cross validation
         X, y = df['text'], df[dim]
 
-        kf = KFold(n_splits=3, shuffle=True)
+        kf = KFold(n_splits=n_splits, shuffle=True)
         kf.get_n_splits(X)
 
         class_accs = []

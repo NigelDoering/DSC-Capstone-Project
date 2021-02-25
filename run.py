@@ -56,13 +56,6 @@ def main(targets):
         convert_notebook('train', **train_cfg)
         logger.info('finished train target: wrote html file to {}'.format(os.path.join(train_cfg['outdir'], 'train.html')))
 
-        # # execute notebook / convert to html
-        # try:
-        #     convert_notebook('train', **train_cfg)
-        #     logger.info('finished train target: wrote html file to {}'.format(os.path.join(train_cfg['outdir'], 'train.html')))
-        # except:
-        #     logger.info('finished train but could not write results to notebook')
-
     # Calculate User Polarities
     if 'analysis' in targets or 'all' in targets:
         logger.info('Starting analysis target')
@@ -87,12 +80,7 @@ def main(targets):
 
         convert_notebook('analysis', **analysis_cfg)
         logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
-        # # execute notebook / convert to html
-        # try:
-        #     logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(train_cfg['outdir'], 'train.html')))
-        # except:
-        #     logger.info('finished analysis but error in making target')
-    
+        
     logger.info('ENDING PROGRAM')
    
     return
