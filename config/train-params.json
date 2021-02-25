@@ -2,5 +2,5 @@
     "training_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/training_data",
     "model_path": "/Users/tanujpankaj/Desktop/dsc180/data/model",
     "dims": ["pol_rightness", "credibility", "moderacy"],
-    "outdir": "/Users/tanujpankaj/Desktop/dsc180/data/visualizations"
+    "outdir": "/Users/tanujpankaj/Desktop/dsc180/data/visualizations/"
 }

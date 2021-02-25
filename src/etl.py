@@ -18,11 +18,10 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, a
     '''
     Retrieve user tweets and write to csv.
     '''
-    logger.info("collecting major tweet data")
     # Tweepy Authorization
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret_key)
     auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+    api = tweepy.API(auth, wait_on_rate_limit=True)
 
     # Specific tweets
     for tweet_id in tweet_ids:
@@ -67,7 +66,7 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, a
 
                 # keep grabbing tweets until there are no tweets left to grab
                 while len(new_tweets) > 0 and len(alltweets) < max_recent_tweets:
-                    logger.info('getting tweets before {}'.format(oldest))
+                    #logger.info('getting tweets before {}'.format(oldest))
                     
                     #all subsiquent requests use the max_id param to prevent duplicates
                     new_tweets = api.user_timeline(user_id, count=200, exclude_replies=exclude_replies, include_rts=include_rts, max_id=oldest)
@@ -78,7 +77,7 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, a
                     #update the id of the oldest tweet less one
                     oldest = alltweets[-1].id - 1
 
-                    logger.info('{} tweets downloaded so far'.format(len(alltweets)))
+                    #logger.info('{} tweets downloaded so far'.format(len(alltweets)))
                     
 
                 alltweets = alltweets[:max_recent_tweets]
@@ -120,7 +119,5 @@ def get_data(logger, preprocessed_data_path: str, training_data_path: str, dims:
     # logger.info('finished getting data and wrote data to {}'.format(os.path.join(training_data_path, 'data.csv')))
 
     # MAJOR TWEETS DATA
-    logger.info('getting major tweet data')
     get_data_major_tweets(logger, consumer_key, consumer_secret_key, access_token, access_token_secret, bearer_token, user_data_path, exclude_replies, include_rts, max_recent_tweets, tweet_ids=tweet_ids)
-    logger.info('finished getting major tweet data')
     return
