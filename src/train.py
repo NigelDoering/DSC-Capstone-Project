@@ -28,8 +28,6 @@ def train_model(logger, df, training_data_path, model_path, dims, fit_priors, ma
     results = {}
     i = 0
     for dim in dims:
-        logger.info('Dimension: {}'.format(dim))
-
         # Create model
         count_vect = CountVectorizer(stop_words='english', max_df=max_dfs[i], min_df=min_dfs[i])
         tfidf_transformer = TfidfTransformer()
@@ -66,12 +64,6 @@ def train_model(logger, df, training_data_path, model_path, dims, fit_priors, ma
         fp = os.path.join(model_path, '{}.mdl'.format(dim))
         f = open(fp, 'wb')
         pickle.dump(text_clf, f)
-
-        # Log results
-        logger.info('Class accuracies: {}'.format(class_accs))
-        logger.info('Regression errors: {}'.format(reg_errors))
-        logger.info('Num classes: {}'.format(df[dim].nunique()))
-        logger.info('Saved model to {}\n'.format(fp))
         
     return 
 

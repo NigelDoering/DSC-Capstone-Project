@@ -56,7 +56,7 @@ def main(targets):
         convert_notebook('train', **train_cfg)
         logger.info('finished train target: wrote html file to {}'.format(os.path.join(train_cfg['outdir'], 'train.html')))
 
-    # Calculate User Polarities
+    # Analysis target: calculate user polarities
     if 'analysis' in targets or 'all' in targets:
         logger.info('Starting analysis target')
         with open('config/analysis-params.json') as fh:
@@ -80,6 +80,46 @@ def main(targets):
 
         convert_notebook('analysis', **analysis_cfg)
         logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+
+    # Test target
+    if 'test' in targets or 'all' in targets:
+        logger.info('Starting TEST target')
+
+        # Train target
+        logger.info('Starting TEST train target')
+        with open('config/train-params.json') as fh:
+            train_cfg = json.load(fh)
+        df = pd.read_csv(os.path.join(train_cfg['training_data_path'], 'data.csv')).drop(columns=['Unnamed: 0'])
+        train_model(logger, df, **train_cfg)
+        convert_notebook('train', **train_cfg)
+        logger.info('finished TEST train target: wrote html file to {}'.format(os.path.join(train_cfg['outdir'], 'train.html')))
+
+        # Analysis target
+        logger.info('Starting TEST analysis target')
+        with open('config/analysis-params.json') as fh:
+            analysis_cfg = json.load(fh)
+        # do user stats
+        tweets = {}
+        for tweet_id in analysis_cfg['tweet_ids']:
+            path = os.path.join(analysis_cfg['user_data_path'], 'tweet_{}.csv'.format(tweet_id))
+            tweet = pickle.load(open(path, 'rb'))
+            tweets[tweet_id] = tweet
+        for key, value in tweets.items():
+            for user_id in list(value['user_ids'].keys()):
+                value['user_ids'][user_id] = pd.read_csv(os.path.join(analysis_cfg['user_data_path'], 'user_{}_tweets.csv'.format(user_id)))
+        mdls = []
+        dims = analysis_cfg['dims']
+        for dim in dims:
+            path = os.path.join(analysis_cfg['model_path'], '{}.mdl'.format(dim))
+            mdl = pickle.load(open(path, 'rb'))
+            mdls.append(mdl)
+        compute_user_stats(logger, tweets, mdls, dims, analysis_cfg['user_data_path'], analysis_cfg['flagged'])
+
+        convert_notebook('analysis', **analysis_cfg)
+        logger.info('finished TEST analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+
+
+        logger.info('finished TEST target')
         
     logger.info('ENDING PROGRAM')
    

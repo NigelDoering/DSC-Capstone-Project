@@ -11,7 +11,6 @@
                "npr": [-1, 5, 1],
                "nypost": [1, 2, 1],
                "oann": [3, 1, 3]},
-
     "user_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/user_data",
     "exclude_replies": false,
     "include_rts": true,

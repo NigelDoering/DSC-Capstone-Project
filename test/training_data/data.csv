@@ -1,0 +1,4 @@
+,text,a,b,c
+0,Hello this is a test tweet,-1,0,1
+1,This is another test tweet,0,1,-1
+2,Here is a last tweet,1,-1,0

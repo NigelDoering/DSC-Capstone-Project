@@ -1,10 +1,8 @@
 {
-    "model_path": "/Users/tanujpankaj/Desktop/dsc180/data/model",
-    "user_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/user_data",
-    "dims": ["pol_rightness", "credibility", "moderacy"],
-    "tweet_ids": ["1346674133111865347", "1346669415304196096", "1335775345811853312", "1325119674653188097", "1325118893657116672", "1324001997993906176",
-        "1335672809549225984", "1325120641138372609", "1324747655981998081", "1346655233531899905", "1346689160170647555", "1324000451977773057"],
-    "flagged": {"1346674133111865347": true, "1346669415304196096": true, "1335775345811853312": true, "1325119674653188097": true, "1325118893657116672": true, "1324001997993906176": true,
-        "1335672809549225984": false, "1325120641138372609": false, "1324747655981998081": false, "1346655233531899905": false, "1346689160170647555": false, "1324000451977773057": false},
-    "outdir": "/Users/tanujpankaj/Desktop/dsc180/data/visualizations"
+    "model_path": "test/model/",
+    "user_data_path": "test/user_data/",
+    "dims": ["a", "b", "c"],
+    "tweet_ids": ["123"],
+    "flagged": {"123": true},
+    "outdir": "test/visualizations/"
 }

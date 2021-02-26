@@ -1,10 +1,10 @@
 {
-    "training_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/training_data",
-    "model_path": "/Users/tanujpankaj/Desktop/dsc180/data/model",
-    "dims": ["pol_rightness", "credibility", "moderacy"],
-    "fit_priors": [false, false, false],
-    "max_dfs": [0.3, 0.3, 0.3],
-    "min_dfs": [0.000002, 0.000002, 0.000002],
+    "training_data_path": "test/training_data/",
+    "model_path": "test/model/",
+    "dims": ["a", "b", "c"],
+    "fit_priors": [false, true, false],
+    "max_dfs": [1, 1, 1],
+    "min_dfs": [0, 0, 0],
     "n_splits": 3, 
-    "outdir": "/Users/tanujpankaj/Desktop/dsc180/data/visualizations/"
+    "outdir": "test/visualizations/"
 }

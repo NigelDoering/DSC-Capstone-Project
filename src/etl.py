@@ -30,11 +30,11 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, a
         fn = os.path.join(output_path, 'tweet_{}.csv'.format(tweet_id))
         tweet_info = {
             'id': status.id,
-            'created_at': status.created_at,
+            'created_at': status.created_at, # TODO: take out?
             'user/id': status.user.id,
             'user/name': status.user.screen_name,
             'text': status.text,
-            'entities/hashtags': status.entities['hashtags'] # see if this works
+            'entities/hashtags': status.entities['hashtags'] # TODO: take out?
         } 
         user_ids = {}
         retweets_list = api.retweets(tweet_id)
@@ -76,13 +76,14 @@ def get_data_major_tweets(logger, consumer_key: str, consumer_secret_key: str, a
                     #update the id of the oldest tweet less one
                     oldest = alltweets[-1].id - 1
 
-                    #logger.info('{} tweets downloaded so far'.format(len(alltweets)))
+                    #logger.info('{} tweets downloaded so far'.format(len(all   tweets)))
                     
 
                 alltweets = alltweets[:max_recent_tweets]
         
             #transform the tweepy tweets into a 2D array that will populate the csv 
             outtweets = [[tweet.id_str, tweet.created_at, tweet.text, tweet.entities['hashtags']] for tweet in alltweets]
+            # TODO: take out all other categories
 
             if output_path:
                 fn = os.path.join(output_path, 'user_{}_tweets.csv'.format(user_id))
