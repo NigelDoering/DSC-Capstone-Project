@@ -29,5 +29,25 @@
 #### Train
 * Go inside docker container and make sure data has been collected
 * Set train parameters in config/train-params.json
-  * weiojfowei
+   * training_data_path: path to directory of the training data (should be same as data-params)
+   * model_path: path to directory to output models to be trained
+   * dims (list of str): list of the names of the dimensions that polarities should be calculated on (E.g. ["moderacy", "misinformation"])
+   * fit_priors (list of bools): hyperparemeter for Naive Bayes classifier (1 for each dimension) - Whether to learn class prior probabilities or not. If false, a uniform prior will be used.
+   * max_dfs (list of floats/ints): hyperparameter for CountVectorizer (1 for each dimension) - When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold (corpus-specific stop words). If float, the parameter represents a proportion of documents, integer absolute counts.
+   * min_dfs (list of floats/ints): hyperparameter for CountVectorizer (1 for each dimension) - When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold. This value is also called cut-off in the literature. If float, the parameter represents a proportion of documents, integer absolute counts. 
+   * n_splits (int): number of folds to use for K-fold cross validation
+   * outdir: path to directory to output a notebook of the results
+* Make sure paths to directories already exists
+* run 'python run.py train' in root directory of repo 
+* Look in the outdir you specified for an html file of the results
+#### Analysis
+* Go inside docker container and make sure data has been collected and models have been trained
+* Set train parameters in config/analysis-params.json
+* Set analysis parameters in config/analysis-params.json
+   * model_path: path to directory of trained models (should be same as train-params)
+   * user_data_path: path to directory of user data (should be same as data-params)
+   * dims (list of str): list of the names of the dimensions that polarities should be calculated on (E.g. ["moderacy", "misinformation"])
+   * tweet_ids (list of str): list of tweet IDs to analyze
+   * flagged (dict): dictionary should have a key for every tweet to be analyzed and a boolean for whether or not the tweet was flagged (E.g. {"123": true, "456": false})
+   * outdir: path to directory to output a notebook of the results
 
