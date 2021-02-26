@@ -1,17 +1,16 @@
 # Data Science Capstone Project
 
-### Info
+## Info
 * The data being used here is Tweets from various news sources.
-### Preqrequisites
+## Preqrequisites
 * Ensure libraries are installed. (pandas, requests, os, gzip, shutil, json, flatten).
 * Download repo: https://github.com/thepanacealab/covid19_twitter.
 * Docker container id: tmpankaj/example-docker
-### How to Run
+## How to Run
 * All parameters are of type str unless specified otherwise
 * Set twitter API Keys in config/twitter-api-keys.json
 #### Data 
 * Go inside docker container
-* Make sure directories exist
 * Add .txt files with Tweet IDs from https://tweetsets.library.gwu.edu/ to some directory where preprocessed data will be stored. (E.g. cnn.txt in /data/preprocessed directory)
 * Use this hydrator https://github.com/DocNow/hydrator to hydrate these tweets and make sure there is a .csv file in the same directory (E.g. cnn.csv in /data/preprocessed)
 * Set data parameters in config/data-params.json
@@ -24,6 +23,11 @@
    * include_rts (bool): If true, will include retweets when collecting user tweets.
    * max_recent_tweets (int): maximum recent number of tweets to obtain from a user
    * tweet_ids (list of str): list of tweet IDs to collect to analyze flagged vs unflagged retweeters
+* Make sure paths to directories already exist
 * run 'python run.py data' in root directory of repo
 * This will only collect the data
+#### Train
+* Go inside docker container and make sure data has been collected
+* Set train parameters in config/train-params.json
+  * weiojfowei
 
