@@ -1,6 +1,5 @@
 # Data Science Capstone Project
 
-## Data
 ### Info
 * The data being used here is Tweets from various news sources.
 ### Preqrequisites
@@ -17,9 +16,14 @@
 * Use this hydrator https://github.com/DocNow/hydrator to hydrate these tweets and make sure there is a .csv file in the same directory (E.g. cnn.csv in /data/preprocessed)
 * Set data parameters in config/data-params.json
    * preprocessed_data_path: path to directory of preprocessed data
-   * output_data_path: path to directory to output .csv file for training data
+   * training_data_path: path to directory to output training data
    * dims (list of str): list of the names of the dimensions that polarities will be eventually calculated on (E.g. ["moderacy", "misinformation"])
-   * labels (dict): dictionary with the keys including the news sources and each value being a list with a 0/1 for each dimension (E.g. {"cnn": [0, 1], "fox": [1, 0]})
+   * labels (dict): dictionary with the keys including the news sources and each value being a list with a polarity for each dimension. Every news source that will be used in your data must have a label for every dimension. (E.g. {"cnn": [0, 1], "fox": [1, 0]})
+   * user_data_path: path to directory to output user data
+   * exclude_replies (bool): If true, will exclude replies when collecting user tweets.
+   * include_rts (bool): If true, will include retweets when collecting user tweets.
+   * max_recent_tweets (int): maximum recent number of tweets to obtain from a user
+   * tweet_ids (list of str): list of tweet IDs to collect to analyze flagged vs unflagged retweeters
 * run 'python run.py data' in root directory of repo
 * This will only collect the data
 
