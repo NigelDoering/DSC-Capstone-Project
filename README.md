@@ -37,7 +37,7 @@
    * min_dfs (list of floats/ints): hyperparameter for CountVectorizer (1 for each dimension) - When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold. This value is also called cut-off in the literature. If float, the parameter represents a proportion of documents, integer absolute counts. 
    * n_splits (int): number of folds to use for K-fold cross validation
    * outdir: path to directory to output a notebook of the results
-* Make sure paths to directories already exists
+* Make sure paths to directories already exist
 * run 'python run.py train' in root directory of repo 
 * Look in the outdir you specified for an html file of the results
 #### Analysis
@@ -50,4 +50,7 @@
    * tweet_ids (list of str): list of tweet IDs to analyze
    * flagged (dict): dictionary should have a key for every tweet to be analyzed and a boolean for whether or not the tweet was flagged (E.g. {"123": true, "456": false})
    * outdir: path to directory to output a notebook of the results
+* Make sure paths to directories already exist
+* run 'python run.py analysis' in root directory of repo
+* Look in the outdir you specified for an html file of the results
 
