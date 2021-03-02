@@ -98,25 +98,25 @@ def get_data(logger, preprocessed_data_path: str, training_data_path: str, dims:
     Retrieves data and writes to directory
     '''
 
-    # # TRAINING DATA
-    # logger.info('getting training data')
-    # fns = [filename for filename in listdir(preprocessed_data_path) if filename.endswith(".csv") ]
-    # dir = preprocessed_data_path
+    # TRAINING DATA
+    logger.info('getting training data')
+    fns = [filename for filename in listdir(preprocessed_data_path) if filename.endswith(".csv") ]
+    dir = preprocessed_data_path
 
-    # li = []
-    # for fn in fns:
-    #     logger.info('reading in {}'.format(fn))
-    #     df = pd.read_csv(os.path.join(dir, fn), index_col=None, usecols=['text'], header=0)
-    #     for i in range(len(dims)):
-    #         label = labels[fn.replace('.csv', '')][i]
-    #         df[dims[i]] = pd.Series([label]*df.shape[0])
-    #     li.append(df)
+    li = []
+    for fn in fns:
+        logger.info('reading in {}'.format(fn))
+        df = pd.read_csv(os.path.join(dir, fn), index_col=None, usecols=['text'], header=0)
+        for i in range(len(dims)):
+            label = labels[fn.replace('.csv', '')][i]
+            df[dims[i]] = pd.Series([label]*df.shape[0])
+        li.append(df)
 
-    # df = pd.concat(li, axis=0, ignore_index=True)
-    # os.makedirs(training_data_path, exist_ok=True)
-    # df.to_csv(os.path.join(training_data_path, 'data.csv'))
+    df = pd.concat(li, axis=0, ignore_index=True)
+    os.makedirs(training_data_path, exist_ok=True)
+    df.to_csv(os.path.join(training_data_path, 'data.csv'))
 
-    # logger.info('finished getting data and wrote data to {}'.format(os.path.join(training_data_path, 'data.csv')))
+    logger.info('finished getting data and wrote data to {}'.format(os.path.join(training_data_path, 'data.csv')))
 
     # MAJOR TWEETS DATA
     get_data_major_tweets(logger, consumer_key, consumer_secret_key, access_token, access_token_secret, bearer_token, user_data_path, exclude_replies, include_rts, max_recent_tweets, tweet_ids=tweet_ids)
