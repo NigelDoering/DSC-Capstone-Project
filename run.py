@@ -17,6 +17,7 @@ from train import train_model
 from analysis import compute_user_stats
 from utils import convert_notebook
 from logging.handlers import RotatingFileHandler
+from statistics import compute_results
 
 def main(targets):
     '''
@@ -80,6 +81,16 @@ def main(targets):
 
         convert_notebook('analysis', **analysis_cfg)
         logger.info('finished analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+
+    # Results target: calculate results
+    if 'results' in targets or 'all' in targets:
+        logger.info('Starting results target')
+        with open('config/results-params.json') as fh:
+            results_cfg = json.load(fh)
+        fp = os.path.join(results_cfg['user_data_path'], 'polarities.csv')
+        polarities = pd.read_csv(fp, usecols=results_cfg['dims'] + ['flagged']).dropna()
+        compute_results(logger, polarities, results_cfg['dims'], results_cfg['outdir'])
+
 
     # Test target
     if 'test' in targets or 'all' in targets:
