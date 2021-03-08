@@ -1,5 +1,5 @@
 {
-    "user_data_path": "/Users/tanujpankaj/Desktop/dsc180/data/user_data",
-    "dims": ["pol_rightness", "credibility", "moderacy"],
-    "outdir": "/Users/tanujpankaj/Desktop/dsc180/data/visualizations"
+    "user_data_path": "test/user_data/",
+    "dims": ["a", "b", "c"],
+    "outdir": "test/visualizations/"
 }
