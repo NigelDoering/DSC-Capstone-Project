@@ -11,8 +11,6 @@ sys.path.insert(0, 'src')
 
 from etl import get_data
 from eda import generate_stats
-#from analysis import compute_hashtag_stats
-#from analysis import compute_user_stats
 from train import train_model
 from analysis import compute_user_stats
 from utils import convert_notebook
@@ -22,9 +20,9 @@ from statistics import compute_results
 def main(targets):
     '''
     Runs the main project pipeline logic, given the targets.
-    targets must contain: 'data', 'analysis', 'model'. 
+    targets must contain: 'data', 'train', 'analysis', 'results'. 
     
-    `main` runs the targets in order of data=>analysis=>model.
+    `main` runs the targets in order of data=>train=>analysis=>results.
     '''
     # Setup Logger
     logger = logging.getLogger('project_log')
@@ -91,6 +89,9 @@ def main(targets):
         polarities = pd.read_csv(fp, usecols=results_cfg['dims'] + ['flagged']).dropna()
         compute_results(logger, polarities, results_cfg['dims'], results_cfg['outdir'])
 
+        convert_notebook('results', **results_cfg)
+        logger.info('finished results target: wrote html file to {}'.format(os.path.join(results_cfg['outdir'], 'results.html')))
+
 
     # Test target
     if 'test' in targets or 'all' in targets:
@@ -128,6 +129,17 @@ def main(targets):
 
         convert_notebook('analysis', **analysis_cfg)
         logger.info('finished TEST analysis target: wrote html file to {}'.format(os.path.join(analysis_cfg['outdir'], 'analysis.html')))
+
+        # Results target: calculate results
+        logger.info('Starting TEST results target')
+        with open('config/results-params.json') as fh:
+            results_cfg = json.load(fh)
+        fp = os.path.join(results_cfg['user_data_path'], 'polarities.csv')
+        polarities = pd.read_csv(fp, usecols=results_cfg['dims'] + ['flagged']).dropna()
+        compute_results(logger, polarities, results_cfg['dims'], results_cfg['outdir'])
+
+        convert_notebook('results', **results_cfg)
+        logger.info('finished TEST results target: wrote html file to {}'.format(os.path.join(results_cfg['outdir'], 'results.html')))
 
 
         logger.info('finished TEST target')

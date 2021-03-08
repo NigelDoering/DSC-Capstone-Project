@@ -12,6 +12,9 @@ import re
 import pickle
 
 def compute_user_stats(logger, tweets, mdls, dims, user_data_path, flagged):
+    '''
+    Computes user polarities using their tweets and text prediction models.
+    '''
     user_entries = []
 
     # Loop through tweets

@@ -21,6 +21,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 
 def train_model(logger, df, training_data_path, model_path, dims, fit_priors, max_dfs, min_dfs, n_splits, outdir):
+    '''Trains model'''
     # Clean Data
     df['text'] = df['text'].apply(lambda x: x.replace('#', '').replace('@', ''))
 

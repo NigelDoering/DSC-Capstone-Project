@@ -7,16 +7,10 @@ import json
 import os
 
     
-    
-
-
-    
-
-        
-
-
-# STARTING HERE
 def visualize_densities(logger, data, dim, outdir):
+    '''
+    saves KDE plot.
+    '''
     pol_flagged = data[data['flagged']][dim]
     pol_unflagged = data[data['flagged'] == False][dim]
     title = 'KDE plot for {}'.format(dim)
@@ -29,6 +23,9 @@ def visualize_densities(logger, data, dim, outdir):
     logger.info('wrote image to {}'.format(fp))
 
 def visualize_correlation(logger, data, dim1, dim2, outdir):
+    '''
+    saves correlation plot.
+    '''
     data = data[[dim1, dim2, 'flagged']]
     title = 'User {} versus {} Polarity'.format(dim1, dim2)
     sns.scatterplot(x=data[dim1], y=data[dim2],
@@ -45,7 +42,6 @@ def mean_diff(data, dim):
 def permutation_test(data, n_reps, dim):
     # Observed statistic
     obs = mean_diff(data, dim)
-    # print("Observed Mean: " + str(np.mean(data[dim])))
     
     # Running and permuting n_reps of the data
     trials = []
@@ -63,6 +59,9 @@ def permutation_test(data, n_reps, dim):
     return np.count_nonzero(np.array(trials) >= obs) / n_reps
 
 def run_permutation_test(logger, data, dim, outdir):
+    '''
+    Permutation test.
+    '''
     outcomes = []
     out = {'Dimension': dim, 
         'observed_mean': mean_diff(data, dim),
@@ -73,6 +72,9 @@ def run_permutation_test(logger, data, dim, outdir):
     logger.info('wrote results to {}'.format(fp))
 
 def run_two_sided_ttest(logger, data, dim, outdir):
+    '''
+    Two sided t test.
+    '''
     outcomes = []
     flagged = data[data['flagged'] == True][dim]
     unflagged = data[data['flagged'] == False][dim]
@@ -84,8 +86,10 @@ def run_two_sided_ttest(logger, data, dim, outdir):
     logger.info('wrote results to {}'.format(fp))
 
 def run_one_sided_ttest(logger, data, dim, outdir):
+    '''
+    One sided t test.
+    '''
     outcomes = []
-    # dimensions = ['pol_rightness', 'credibility', 'moderacy']
     # for dim in dimensions:
     flagged = data[data['flagged'] == True][dim]
     unflagged = data[data['flagged'] == False][dim]
@@ -94,13 +98,15 @@ def run_one_sided_ttest(logger, data, dim, outdir):
         'p-value': gen[1]/2,
         'Test Statistic': gen[0]
         }
-    # outcomes.append(out)
     fp = os.path.join(outdir, 'one_sided_ttest_{}.json'.format(dim))
     with open(fp, 'w') as fout:
         json.dump(out , fout)
     logger.info('wrote results to {}'.format(fp))
 
 def compute_results(logger, data, dims, outdir):
+    '''
+    Gets all results
+    '''
     dim = dims[0]
     for dim in dims:
         visualize_densities(logger, data, dim, outdir)
