@@ -9,6 +9,9 @@
 ## How to Run
 * All parameters are of type str unless specified otherwise
 * Set twitter API Keys in config/twitter-api-keys.json
+#### Test
+* run 'python run.py test' in root directory of repo
+* look in test/visualizations for the test targets
 #### Data 
 * Go inside docker container
 * Add .txt files with Tweet IDs from https://tweetsets.library.gwu.edu/ to some directory where preprocessed data will be stored. (E.g. cnn.txt in /data/preprocessed directory)
@@ -42,7 +45,6 @@
 * Look in the outdir you specified for an html file of the results
 #### Analysis
 * Go inside docker container and make sure data has been collected and models have been trained
-* Set train parameters in config/analysis-params.json
 * Set analysis parameters in config/analysis-params.json
    * model_path: path to directory of trained models (should be same as train-params)
    * user_data_path: path to directory of user data (should be same as data-params)
@@ -53,4 +55,12 @@
 * Make sure paths to directories already exist
 * run 'python run.py analysis' in root directory of repo
 * Look in the outdir you specified for an html file of the results
-
+#### Results
+* Go inside docker container and make sure data has been collected, models have been trained, and analysis has been ran.
+* Set results parameters in config/results-params.json
+   * user_data_path: path to directory of user data (should be same as data-params)
+   * dims (list of str): list of the names of the dimensions that results should be calculated on (E.g. ["moderacy", "misinformation"])
+   * outdir: path to directory to output a notebook of the results
+* Make sure paths to directories already exist
+* run 'python run.py results' in root directory of repo
+* Look in the outdir you specified for an html file of the results
