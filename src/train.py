@@ -34,6 +34,7 @@ def train_model(logger, df, training_data_path, model_path, dims, fit_priors, ma
         tfidf_transformer = TfidfTransformer()
         clf = MultinomialNB(fit_prior=fit_priors[i])
         text_clf = Pipeline([('vect', count_vect), ('tfidf', tfidf_transformer), ('clf', clf)])
+        # text_clf = Pipeline([('vect', count_vect), ('clf', clf)])
 
         i += 1
 
